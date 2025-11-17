@@ -1,0 +1,44 @@
+Here’s the intended flow of your app (Host & Guest) for synchronized audio playback using Nearby Connections, following your requirements and clean architecture:
+1. Home Screen
+User chooses Host or Guest mode.
+2. Host Flow
+Permissions
+App requests Bluetooth, Location, and Nearby permissions.
+If denied, user is prompted to grant them in settings.
+File Selection
+Host picks an MP3 file from local storage.
+Start Advertising
+Host starts advertising using Nearby Connections (P2P_STAR).
+Host waits for guests to connect.
+Guest List
+Host sees a list of connected guests (device names or IDs).
+Send File
+Host sends the selected MP3 file to all connected guests.
+UI shows file transfer status for each guest (Not Sent, Sending, Sent, Error).
+Send Playback Command
+Once all guests have received the file, host sends a “start playback at timestamp X” command to all guests.
+Host can also send play/pause/seek commands for sync.
+Playback Controls
+Host can play, pause, or seek the audio.
+Host’s actions can be broadcast to guests for synchronized playback.
+3. Guest Flow
+Permissions
+App requests Bluetooth, Location, and Nearby permissions.
+If denied, user is prompted to grant them in settings.
+Discovery
+Guest starts discovering for hosts using Nearby Connections.
+Connect to Host
+Guest selects and connects to the host.
+Receive File
+Guest receives the MP3 file from the host and buffers it locally.
+Wait for Command
+Guest waits for the “start playback at timestamp X” command from the host.
+Synchronized Playback
+On receiving the command, guest starts playback at the specified timestamp using ExoPlayer.
+Guest listens for further play/pause/seek commands from the host and syncs playback accordingly.
+Playback Status
+Guest UI shows connection status, file transfer status, and current playback time.
+4. Optional Enhancements
+Show current playback time on both host and guests.
+Animate visual feedback while audio is playing.
+Handle network interruptions and re-sync if needed.
